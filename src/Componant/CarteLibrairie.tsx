@@ -2,11 +2,12 @@ interface CarteLibrairieProps {
   imageUrl: string;
   titre: string;
   auteur?: string;
+  href?: string;
 }
 
-export default function CarteLibrairie({ imageUrl, titre, auteur }: CarteLibrairieProps) {
-  return (
-    <div className="flex flex-col gap-3 cursor-pointer group">
+export default function CarteLibrairie({ imageUrl, titre, auteur, href }: CarteLibrairieProps) {
+  const content = (
+    <>
       {/* Vignette */}
       <div className="w-full aspect-[4/5] bg-[#efefef] flex items-center justify-center overflow-hidden px-6 py-8">
         <img
@@ -22,11 +23,23 @@ export default function CarteLibrairie({ imageUrl, titre, auteur }: CarteLibrair
           {titre}
         </p>
         {auteur && (
-          <p className="text-[16px] sm:text-[20px] text-gray-600">
-            {auteur}
-          </p>
+          <p className="text-[16px] sm:text-[20px] text-gray-600">{auteur}</p>
         )}
       </div>
+    </>
+  );
+
+  if (href) {
+    return (
+      <a href={href} className="flex flex-col gap-3 group">
+        {content}
+      </a>
+    );
+  }
+
+  return (
+    <div className="flex flex-col gap-3 cursor-pointer group">
+      {content}
     </div>
   );
 }

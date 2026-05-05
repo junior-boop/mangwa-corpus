@@ -10,6 +10,10 @@ export default defineConfig({
   integrations: [react()],
 
   vite: {
-    plugins: [tailwindcss()]
+    plugins: [tailwindcss()],
+    ssr: {
+      noExternal: ["react-pdf"],
+      external: ["pdfjs-dist"],
+    },
   }
 });

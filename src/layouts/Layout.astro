@@ -1,18 +1,24 @@
 ---
 import "../styles/global.css";
+import { ClientRouter } from "astro:transitions";
+import StickyPlayer from "../Componant/StickyPlayer";
 ---
 
 <!doctype html>
-<html lang='en'>
+<html lang='fr'>
 	<head>
 		<meta charset='UTF-8' />
 		<meta name='viewport' content='width=device-width' />
 		<link rel='icon' type='image/svg+xml' href='/favicon.svg' />
 		<link rel='icon' href='/favicon.ico' />
 		<meta name='generator' content={Astro.generator} />
-		<title>Astro Basics</title>
+		<title>Mangwa Corpus</title>
+		<ClientRouter />
 	</head>
-	<body>
+	<body class="pb-20">
 		<slot />
+		<div transition:persist="sticky-player">
+			<StickyPlayer client:load />
+		</div>
 	</body>
 </html>
