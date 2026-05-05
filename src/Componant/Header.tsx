@@ -72,6 +72,7 @@ const navItems = [
   { label: "E-Book", href: "/ebook", hasDropdown: true },
   { label: "Audios", href: "/audio", hasDropdown: true },
   { label: "Services", href: "#", hasDropdown: true },
+  { label: "Qui sommes nous ?", href: "/qui-sommes-nous", hasDropdown: false },
 ];
 
 export default function Header() {
