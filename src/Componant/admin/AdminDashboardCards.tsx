@@ -24,8 +24,8 @@ const CARDS = [
   { key: "magazines" as keyof Counts, label: "Magazines", href: "/admin/magazines", Icon: IcTwotoneNewspaper },
   { key: "audios" as keyof Counts, label: "Audios", href: "/admin/audios", Icon: IcBaselineLibraryMusic },
   { key: "videos" as keyof Counts, label: "Vidéos", href: "/admin/videos", Icon: IcRoundVideoLibrary },
-  { key: "hero" as keyof Counts, label: "Hero", href: "/admin/hero", Icon: IcSharpCropLandscape },
-  { key: "media" as keyof Counts, label: "Médiathèque", href: "/admin/media", Icon: IcSharpPermMedia },
+  { key: "hero" as keyof Counts, label: "Bannières", href: "/admin/hero", Icon: IcSharpCropLandscape },
+  { key: "media" as keyof Counts, label: "Médias", href: "/admin/media", Icon: IcSharpPermMedia },
   { key: "users" as keyof Counts, label: "Utilisateurs", href: "/admin/users", Icon: IcBaselinePeople },
   { key: "newsletter" as keyof Counts, label: "Newsletter", href: "/admin/newsletter", Icon: IcBaselineEmail },
 ];

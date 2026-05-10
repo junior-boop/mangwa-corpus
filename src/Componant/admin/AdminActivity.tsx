@@ -18,7 +18,7 @@ const ENTITY_LABEL: Record<string, string> = {
   audio: "Audio",
   video: "Vidéo",
   media: "Média",
-  hero: "Hero",
+  hero: "Bannière",
 };
 
 const IMAGE_EXTS = /\.(jpg|jpeg|png|gif|webp|avif|svg)$/i;
@@ -84,7 +84,9 @@ export default function AdminActivity({ token }: { token: string }) {
 
   if (entries.length === 0) {
     return (
-      <p className="py-10 text-center text-gray-400 text-sm">Aucune activité enregistrée</p>
+      <p className="py-10 text-center text-gray-400 text-sm">
+        Aucune activité pour l'instant. Les ajouts, modifications et suppressions apparaîtront ici.
+      </p>
     );
   }
 
