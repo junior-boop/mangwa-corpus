@@ -67,11 +67,10 @@ export default function AdminDashboardCards({ token }: { token: string }) {
               hover:-translate-y-px hover:border-gray-300"
             style={{ animationDelay: `${i * 40}ms` }}
           >
-            <card.Icon className="h-5 w-5 text-gray-400" />
+            <card.Icon className="h-9 w-9 text-gray-400" />
             <span
-              className={`text-xl font-bold tabular-nums transition-colors duration-300 ${
-                loading ? "text-gray-200" : "text-gray-900"
-              }`}
+              className={`text-xl font-bold tabular-nums transition-colors duration-300 ${loading ? "text-gray-200" : "text-gray-900"
+                }`}
             >
               {loading ? "—" : (count ?? "—")}
             </span>

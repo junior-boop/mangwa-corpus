@@ -114,16 +114,22 @@ function AlbumsSection({ token }: { token: string }) {
         <p className="text-sm text-gray-400 py-4">Aucun album — créez le premier ci-dessus.</p>
       ) : (
         <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-4">
-          {albums.map((album) => (
+          {albums.map((album, i) => (
             <div
               key={album.id}
-              className="group relative cursor-pointer"
+              className="anim-fade-up group relative cursor-pointer"
+              style={{ animationDelay: `${Math.min(i, 11) * 40}ms` }}
               onClick={() => openModal(album)}
             >
               <div className="aspect-square rounded-lg overflow-hidden bg-gray-200 mb-2">
                 {album.cover
-                  ? <img src={mediaUrl(album.cover) ?? ""} alt={album.title} className="w-full h-full object-cover" />
-                  : <div className="w-full h-full flex items-center justify-center text-gray-400 text-2xl">♫</div>
+                  ? <img
+                      src={mediaUrl(album.cover) ?? ""}
+                      alt={album.title}
+                      className="w-full h-full object-cover transition-transform duration-200 ease-out group-hover:scale-[1.03]"
+                    />
+                  : <div className="w-full h-full flex items-center justify-center text-gray-400 text-2xl
+                      transition-transform duration-200 ease-out group-hover:scale-[1.03]">♫</div>
                 }
               </div>
               <p
@@ -137,7 +143,8 @@ function AlbumsSection({ token }: { token: string }) {
               )}
               <button
                 onClick={(e) => { e.stopPropagation(); handleDelete(album.id); }}
-                className="absolute top-4 right-4 bg-red-500 hover:bg-red-600 text-white text-xl w-8 h-8 rounded-full items-center justify-center hidden group-hover:flex"
+                className="absolute top-4 right-4 bg-red-500 hover:bg-red-600 text-white text-xl w-8 h-8 rounded-full items-center justify-center hidden group-hover:flex
+                  transition-colors duration-150"
               >
                 ✕
               </button>
@@ -147,11 +154,11 @@ function AlbumsSection({ token }: { token: string }) {
       )}
 
       {modal.open && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+        <div className="anim-fade-in fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <div className="anim-fade-up bg-white rounded-xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
             <div className="flex items-center justify-between px-6 py-4 border-b">
               <h2 className="font-bold text-gray-900">{modal.item ? "Modifier l'album" : "Nouvel album"}</h2>
-              <button onClick={() => setModal({ open: false, tab: "info" })} className="text-gray-400 hover:text-gray-600 text-xl">✕</button>
+              <button onClick={() => setModal({ open: false, tab: "info" })} className="text-gray-400 hover:text-gray-600 text-xl transition-colors duration-150">✕</button>
             </div>
 
             <div className="flex border-b px-6">
@@ -160,7 +167,7 @@ function AlbumsSection({ token }: { token: string }) {
                   key={t}
                   type="button"
                   onClick={() => setModal((m) => ({ ...m, tab: t }))}
-                  className={`py-3 px-4 text-sm font-medium border-b-2 -mb-px transition-colors ${modal.tab === t ? "border-[#00bcd4] text-[#00bcd4]" : "border-transparent text-gray-500 hover:text-gray-700"}`}
+                  className={`py-3 px-4 text-sm font-medium border-b-2 -mb-px transition-colors duration-150 ${modal.tab === t ? "border-[#00bcd4] text-[#00bcd4]" : "border-transparent text-gray-500 hover:text-gray-700"}`}
                 >
                   {t === "info" ? "Informations" : `Pistes (${tracks.length})`}
                 </button>
@@ -208,9 +215,9 @@ function AlbumsSection({ token }: { token: string }) {
                               {t.artist && <p className="text-xs text-gray-500 truncate">{t.artist}</p>}
                             </div>
                             <div className="flex items-center gap-1 shrink-0">
-                              <button type="button" onClick={() => moveTrack(i, -1)} disabled={i === 0} className="p-1 text-gray-400 hover:text-gray-600 disabled:opacity-30">▲</button>
-                              <button type="button" onClick={() => moveTrack(i, 1)} disabled={i === tracks.length - 1} className="p-1 text-gray-400 hover:text-gray-600 disabled:opacity-30">▼</button>
-                              <button type="button" onClick={() => removeTrack(t.audio_id)} className="p-1 text-red-400 hover:text-red-600 ml-1">✕</button>
+                              <button type="button" onClick={() => moveTrack(i, -1)} disabled={i === 0} className="p-1 text-gray-400 hover:text-gray-600 disabled:opacity-30 transition-colors duration-100">▲</button>
+                              <button type="button" onClick={() => moveTrack(i, 1)} disabled={i === tracks.length - 1} className="p-1 text-gray-400 hover:text-gray-600 disabled:opacity-30 transition-colors duration-100">▼</button>
+                              <button type="button" onClick={() => removeTrack(t.audio_id)} className="p-1 text-red-400 hover:text-red-600 ml-1 transition-colors duration-100">✕</button>
                             </div>
                           </div>
                         ))}
@@ -224,7 +231,7 @@ function AlbumsSection({ token }: { token: string }) {
                       placeholder="Rechercher un titre ou artiste…"
                       value={search}
                       onChange={(e) => setSearch(e.target.value)}
-                      className="w-full border border-gray-300 rounded px-3 py-2 text-sm mb-2 focus:outline-none focus:border-[#00bcd4]"
+                      className="w-full border border-gray-300 rounded px-3 py-2 text-sm mb-2 focus:outline-none focus:border-[#00bcd4] transition-colors duration-150"
                     />
                     <div className="max-h-48 overflow-y-auto divide-y divide-gray-100 border border-gray-200 rounded-lg">
                       {filtered.slice(0, 30).map((a) => (
@@ -232,7 +239,7 @@ function AlbumsSection({ token }: { token: string }) {
                           key={a.id}
                           type="button"
                           onClick={() => addTrack(a)}
-                          className="w-full flex items-center gap-3 px-3 py-2 hover:bg-gray-50 text-left"
+                          className="w-full flex items-center gap-3 px-3 py-2 hover:bg-gray-50 text-left transition-colors duration-100"
                         >
                           {a.cover
                             ? <img src={mediaUrl(a.cover) ?? ""} alt="" className="w-8 h-8 object-cover rounded shrink-0" />
@@ -254,8 +261,8 @@ function AlbumsSection({ token }: { token: string }) {
 
               {error && <p className="text-red-600 text-sm">{error}</p>}
               <div className="flex gap-3 justify-end pt-2">
-                <button type="button" onClick={() => setModal({ open: false, tab: "info" })} className="px-4 py-2 text-sm text-gray-600 hover:text-gray-800">Annuler</button>
-                <button type="submit" disabled={saving} className="bg-[#00bcd4] hover:bg-[#00acc1] text-white font-bold px-6 py-2 rounded text-sm disabled:opacity-60">
+                <button type="button" onClick={() => setModal({ open: false, tab: "info" })} className="px-4 py-2 text-sm text-gray-600 hover:text-gray-800 transition-colors duration-150">Annuler</button>
+                <button type="submit" disabled={saving} className="bg-[#00bcd4] hover:bg-[#00acc1] text-white font-bold px-6 py-2 rounded text-sm disabled:opacity-60 transition-colors duration-150">
                   {saving ? "Enregistrement…" : "Enregistrer"}
                 </button>
               </div>
@@ -324,13 +331,13 @@ export default function AdminAudios({ token }: { token: string }) {
         <h2 className="font-bold text-gray-800 text-base">Audios</h2>
         <button
           onClick={() => { api.albums().then(setAlbums); setSelectedAlbumId(""); setModal({ open: true }); }}
-          className="bg-[#00bcd4] hover:bg-[#00acc1] text-white font-bold px-4 py-2 rounded text-sm transition-colors"
+          className="bg-[#00bcd4] hover:bg-[#00acc1] text-white font-bold px-4 py-2 rounded text-sm transition-colors duration-150"
         >
           + Nouvel audio
         </button>
       </div>
 
-      <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+      <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
         <table className="w-full text-sm">
           <thead className="bg-gray-50 border-b border-gray-200">
             <tr>
@@ -344,7 +351,18 @@ export default function AdminAudios({ token }: { token: string }) {
           </thead>
           <tbody className="divide-y divide-gray-100">
             {loading ? (
-              <tr><td colSpan={6} className="px-4 py-5 text-center text-gray-400">Chargement…</td></tr>
+              <>
+                {Array.from({ length: 5 }).map((_, i) => (
+                  <tr key={i} className="animate-pulse">
+                    <td className="px-4 py-3"><div className="w-10 h-10 bg-gray-100 rounded-full" /></td>
+                    <td className="px-4 py-3"><div className="h-3.5 bg-gray-100 rounded w-32" /></td>
+                    <td className="px-4 py-3"><div className="h-3 bg-gray-100 rounded w-20" /></td>
+                    <td className="px-4 py-3"><div className="h-3 bg-gray-100 rounded w-16" /></td>
+                    <td className="px-4 py-3"><div className="h-5 bg-gray-100 rounded-full w-14" /></td>
+                    <td className="px-4 py-3" />
+                  </tr>
+                ))}
+              </>
             ) : items.length === 0 ? (
               <tr><td colSpan={6} className="px-4 py-5 text-center text-gray-400">Aucun audio</td></tr>
             ) : (() => {
@@ -361,6 +379,7 @@ export default function AdminAudios({ token }: { token: string }) {
               });
               if (groups["__unknown__"]) albumKeys.push("__unknown__");
 
+              let rowIndex = 0;
               return albumKeys.map((key) => (
                 <>
                   <tr key={`group-${key}`}>
@@ -370,30 +389,37 @@ export default function AdminAudios({ token }: { token: string }) {
                       </span>
                     </td>
                   </tr>
-                  {groups[key].map((audio) => (
-                    <tr key={audio.id} className="hover:bg-gray-50">
-                      <td className="px-4 py-3">
-                        {mediaUrl(audio.cover)
-                          ? <img src={mediaUrl(audio.cover)!} alt={audio.title} className="w-10 h-10 object-cover rounded-full" />
-                          : <div className="w-10 h-10 bg-gray-200 rounded-full" />
-                        }
-                      </td>
-                      <td className="px-4 py-3 font-medium text-gray-900">{audio.title}</td>
-                      <td className="px-4 py-3 text-gray-500">{audio.artist}</td>
-                      <td className="px-4 py-3 text-gray-500">{audio.genre ?? "—"}</td>
-                      <td className="px-4 py-3">
-                        {audio.free ? (
-                          <span className="bg-green-100 text-green-700 text-xs font-semibold px-2 py-0.5 rounded-full">Gratuit</span>
-                        ) : (
-                          <span className="bg-gray-100 text-gray-500 text-xs font-semibold px-2 py-0.5 rounded-full">Payant</span>
-                        )}
-                      </td>
-                      <td className="px-4 py-3 text-right space-x-2">
-                        <button onClick={() => { setSelectedAlbumId(String(audio.album_id ?? "")); setModal({ open: true, item: audio }); }} className="text-blue-600 hover:text-blue-800 font-medium text-xs">Modifier</button>
-                        <button onClick={() => handleDelete(audio.id)} className="text-red-500 hover:text-red-700 font-medium text-xs">Supprimer</button>
-                      </td>
-                    </tr>
-                  ))}
+                  {groups[key].map((audio) => {
+                    const delay = Math.min(rowIndex++, 15) * 30;
+                    return (
+                      <tr
+                        key={audio.id}
+                        className="anim-fade-in hover:bg-gray-50 transition-colors duration-100"
+                        style={{ animationDelay: `${delay}ms` }}
+                      >
+                        <td className="px-4 py-3">
+                          {mediaUrl(audio.cover)
+                            ? <img src={mediaUrl(audio.cover)!} alt={audio.title} className="w-10 h-10 object-cover rounded-full" />
+                            : <div className="w-10 h-10 bg-gray-200 rounded-full" />
+                          }
+                        </td>
+                        <td className="px-4 py-3 font-medium text-gray-900">{audio.title}</td>
+                        <td className="px-4 py-3 text-gray-500">{audio.artist}</td>
+                        <td className="px-4 py-3 text-gray-500">{audio.genre ?? "—"}</td>
+                        <td className="px-4 py-3">
+                          {audio.free ? (
+                            <span className="bg-green-100 text-green-700 text-xs font-semibold px-2 py-0.5 rounded-full">Gratuit</span>
+                          ) : (
+                            <span className="bg-gray-100 text-gray-500 text-xs font-semibold px-2 py-0.5 rounded-full">Payant</span>
+                          )}
+                        </td>
+                        <td className="px-4 py-3 text-right space-x-2">
+                          <button onClick={() => { setSelectedAlbumId(String(audio.album_id ?? "")); setModal({ open: true, item: audio }); }} className="text-blue-600 hover:text-blue-800 font-medium text-xs transition-colors duration-100">Modifier</button>
+                          <button onClick={() => handleDelete(audio.id)} className="text-red-500 hover:text-red-700 font-medium text-xs transition-colors duration-100">Supprimer</button>
+                        </td>
+                      </tr>
+                    );
+                  })}
                 </>
               ));
             })()}
@@ -402,11 +428,11 @@ export default function AdminAudios({ token }: { token: string }) {
       </div>
 
       {modal.open && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-xl shadow-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto">
+        <div className="anim-fade-in fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <div className="anim-fade-up bg-white rounded-xl shadow-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto">
             <div className="flex items-center justify-between px-6 py-4 border-b">
               <h2 className="font-bold text-gray-900">{modal.item ? "Modifier l'audio" : "Nouvel audio"}</h2>
-              <button onClick={() => setModal({ open: false })} className="text-gray-400 hover:text-gray-600 text-xl">✕</button>
+              <button onClick={() => setModal({ open: false })} className="text-gray-400 hover:text-gray-600 text-xl transition-colors duration-150">✕</button>
             </div>
             <form onSubmit={handleSave} className="p-6 flex flex-col gap-4">
               <Field label="Titre *" name="title" required defaultValue={modal.item?.title} />
@@ -417,7 +443,7 @@ export default function AdminAudios({ token }: { token: string }) {
                   name="album_id"
                   value={selectedAlbumId}
                   onChange={(e) => setSelectedAlbumId(e.target.value)}
-                  className="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:border-[#00bcd4]"
+                  className="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:border-[#00bcd4] transition-colors duration-150"
                 >
                   <option value="">— Sans album —</option>
                   {albums.map((a) => (
@@ -450,8 +476,8 @@ export default function AdminAudios({ token }: { token: string }) {
 
               {error && <p className="text-red-600 text-sm">{error}</p>}
               <div className="flex gap-3 justify-end pt-2">
-                <button type="button" onClick={() => setModal({ open: false })} className="px-4 py-2 text-sm text-gray-600 hover:text-gray-800">Annuler</button>
-                <button type="submit" disabled={saving} className="bg-[#00bcd4] hover:bg-[#00acc1] text-white font-bold px-6 py-2 rounded text-sm disabled:opacity-60">
+                <button type="button" onClick={() => setModal({ open: false })} className="px-4 py-2 text-sm text-gray-600 hover:text-gray-800 transition-colors duration-150">Annuler</button>
+                <button type="submit" disabled={saving} className="bg-[#00bcd4] hover:bg-[#00acc1] text-white font-bold px-6 py-2 rounded text-sm disabled:opacity-60 transition-colors duration-150">
                   {saving ? "Enregistrement…" : "Enregistrer"}
                 </button>
               </div>
@@ -466,7 +492,7 @@ export default function AdminAudios({ token }: { token: string }) {
 function Field({ label, name, required, type = "text", textarea, defaultValue }: {
   label: string; name: string; required?: boolean; type?: string; textarea?: boolean; defaultValue?: string;
 }) {
-  const cls = "w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:border-[#00bcd4]";
+  const cls = "w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:border-[#00bcd4] transition-colors duration-150";
   return (
     <label className="flex flex-col gap-1 text-sm text-gray-700">
       {label}
@@ -481,7 +507,7 @@ function Field({ label, name, required, type = "text", textarea, defaultValue }:
 function AlbumField({ label, name, required, type = "text", textarea, defaultValue }: {
   label: string; name: string; required?: boolean; type?: string; textarea?: boolean; defaultValue?: string;
 }) {
-  const cls = "w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:border-[#00bcd4]";
+  const cls = "w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:border-[#00bcd4] transition-colors duration-150";
   return (
     <label className="flex flex-col gap-1 text-sm text-gray-700">
       {label}

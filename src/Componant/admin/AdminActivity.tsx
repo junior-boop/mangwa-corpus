@@ -90,10 +90,14 @@ export default function AdminActivity({ token }: { token: string }) {
 
   return (
     <div className="divide-y divide-gray-100">
-      {entries.map((entry) => {
+      {entries.map((entry, i) => {
         const { date, time } = formatDate(entry.created_at);
         return (
-          <div key={entry.id} className="flex items-center gap-3 py-3">
+          <div
+            key={entry.id}
+            className="anim-fade-in flex items-center gap-3 py-3"
+            style={{ animationDelay: `${Math.min(i, 8) * 35}ms` }}
+          >
             <span
               title={ACTION_LABEL[entry.action]}
               className={`shrink-0 w-2 h-2 rounded-full ${ACTION_DOT[entry.action] ?? "bg-gray-300"}`}
